@@ -14,33 +14,43 @@
             <form class="p-3" @submit.prevent="submitForm">
               <div class="form-group">
                 <label>Restaurant Name</label>
-                <input type="text" class="form-control" placeholder="Enter restaurant's name" required>
+                <input v-model="menuForm.title" type="text" class="form-control" placeholder="Enter restaurant's name" required>
               </div>
               <div class="form-group">
                 <label>Phone number</label>
-                <input type="text" class="form-control" placeholder="Enter restaurant's phone number">
+                <input v-model="menuForm.phone" type="text" class="form-control" placeholder="Enter restaurant's phone number">
+              </div>
+              <div class="form-group">
+                <label>Remarks about this restaurant</label>
+                <textarea v-model="menuForm.remark" class="form-control" rows="3"/>
               </div>
               <div class="form-group">
                 <label>Menu
-                  <button type="button" class="btn btn-primary" @click="menuForm.items.push({})">Add item</button>
+                  <button type="button"
+                          class="btn btn-primary"
+                          @click="menuForm.items.push({
+                            name: null,
+                            price: null,
+                            remark: null,
+                          })">
+                    Add item
+                  </button>
                 </label>
                 <div class="row mb-2" v-for="item in menuForm.items">
                   <div class="col">
-                    <input type="text" class="form-control" placeholder="Item">
+                    <input v-model="item.name" type="text" class="form-control" placeholder="Item">
                   </div>
                   <div class="col">
-                    <input type="number" class="form-control" placeholder="price">
+                    <input v-model.number="item.price" type="number" class="form-control" placeholder="price">
                   </div>
                   <div class="col">
-                    <input type="text" class="form-control" placeholder="comment">
+                    <input v-model="item.remark" type="text" class="form-control" placeholder="remark">
                   </div>
                 </div>
               </div>
               <button type="submit" class="btn btn-success">Submit</button>
             </form>
           </div>
-<!--          <div class="font-weight-bold text-info h4">Restaurant Info</div>-->
-
         </div>
       </div>
     </div>
@@ -59,10 +69,16 @@
         menuForm: {
           title: null,
           phone: null,
+          remark: null,
+          itemSize: 0,
           items: [{
-
+            name: null,
+            price: null,
+            remark: null,
           },{
-
+            name: null,
+            price: null,
+            remark: null,
           }],
         },
       }
@@ -78,8 +94,11 @@
     },
     methods: {
       submitForm() {
-        console.log('submitted');
-        axios.get('http://127.0.0.1:8000/v1/line').then(response => {
+        this.menuForm.items = this.menuForm.items.filter(item => (item.name) || (item.name === 0));
+        this.menuForm.itemSize = this.menuForm.items.length;
+        axios.defaults.headers.token = 'testToken';
+        axios.post('http://127.0.0.1:8000/v1/menu', this.menuForm
+        ).then(response => {
           console.log('response');
           console.log(response.data);
         }).catch(error => {
