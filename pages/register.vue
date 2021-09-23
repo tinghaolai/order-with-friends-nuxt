@@ -28,8 +28,6 @@
 
 
 <script>
-  import axios from "axios";
-
   export default {
     data() {
       return {
@@ -39,9 +37,6 @@
           name: null,
         }
       }
-    },
-    created() {
-      console.log('register created');
     },
     computed: {
     },
