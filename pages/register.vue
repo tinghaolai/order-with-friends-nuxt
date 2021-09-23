@@ -43,11 +43,13 @@
     methods: {
       register() {
         axios.post('http://127.0.0.1:8000/v1/register', this.form).then(response => {
-          console.log('response');
-          console.log(response.data);
+          if (response.data === 'success') {
+            toastr.success('register success');
+          } else {
+            toastr.error('register fail: ' + response.data);
+          }
         }).catch(error => {
-          console.log('error');
-          console.log(error);
+          toastr.error(error);
         })
       },
     },
