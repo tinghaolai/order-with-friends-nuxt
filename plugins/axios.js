@@ -6,4 +6,8 @@ export default ({ app, $axios, store }, inject) => {
       }
     })
   })
+
+  $axios.onRequest(config => {
+    config.headers.token = store.getters.userToken;
+  })
 }
