@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col bg-white mt-5 p-3">
-          <div class="h4">Sign up</div>
+          <div class="h4">Login</div>
           <form @submit.prevent="login">
             <div class="form-group">
               <label>Account</label>
