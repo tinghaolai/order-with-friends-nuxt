@@ -14,6 +14,9 @@ export const mutations = {
       setCookie('jwtToken', token, payload.exp * 1000);
     }
   },
+  removeJWTToken(state) {
+    state.jwtToken = null;
+  }
 };
 
 export const actions = {
@@ -29,6 +32,9 @@ export const actions = {
     console.log(loginData);
     context.commit('updateJWTToken', loginData.token);
   },
+  logout(context) {
+    context.commit('removeJWTToken');
+  }
 };
 
 export const getters = {
