@@ -1,3 +1,5 @@
+import { eraseCookie } from '~/services/cookie'
+
 export function parseJwt (token) {
   var base64Url = token.split('.')[1];
   var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -12,4 +14,8 @@ export function ifJWTExpired(token) {
   const payload = parseJwt(token);
 
   return Date.now() > payload.exp * 1000;
+}
+
+export function removeJWT() {
+  eraseCookie('jwtToken');
 }
