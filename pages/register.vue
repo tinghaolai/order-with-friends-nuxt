@@ -53,6 +53,11 @@
         })
       },
     },
+    beforeCreate() {
+      if (this.$ifUserLogin) {
+        this.$router.push('/');
+      }
+    },
   }
 </script>
 

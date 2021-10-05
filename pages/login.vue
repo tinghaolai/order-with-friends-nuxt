@@ -56,6 +56,11 @@
         console.log(this.userToken);
       }
     },
+    beforeCreate() {
+      if (this.$ifUserLogin) {
+        this.$router.push('/');
+      }
+    },
   }
 </script>
 
