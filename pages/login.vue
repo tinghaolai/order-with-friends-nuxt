@@ -41,10 +41,11 @@
     methods: {
       login() {
         axios.post('http://127.0.0.1:8000/v1/login', this.form).then(response => {
-          console.log(response.data);
           if (response.data.status === 0) {
-            console.log('successfully login');
+            this.$router.push('/');
             this.$store.dispatch('recordLoginInfo', response.data.data);
+          } else {
+            toastr.error('failing login');
           }
         }).catch(error => {
           toastr.error(error);
