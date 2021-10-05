@@ -14,7 +14,7 @@
             <em>User</em>
           </template>
           <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item v-if="userToken" @click="logout">Sign Out</b-dropdown-item>
+          <b-dropdown-item v-if="ifUserLogin" @click="logout">Sign Out</b-dropdown-item>
           <template v-else>
             <b-dropdown-item>
               <NuxtLink to="/Login">Login</NuxtLink>
@@ -32,6 +32,11 @@
 <script>
   import { mapGetters } from 'vuex'
   export default {
+    data() {
+      return {
+        ifUserLogin: this.$ifUserLogin(),
+      }
+    },
     methods: {
       logout() {
         this.$logout();

@@ -5,5 +5,9 @@ export default ({ store, redirect }, inject) => {
     removeJWT();
     store.dispatch('logout');
     redirect('/login');
+  });
+
+  inject('ifUserLogin', () => {
+    return store.getters.userToken !== null;
   })
 }
