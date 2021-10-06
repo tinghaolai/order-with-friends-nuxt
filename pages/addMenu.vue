@@ -97,7 +97,7 @@
         this.menuForm.items = this.menuForm.items.filter(item => (item.name) || (item.name === 0));
         this.menuForm.itemSize = this.menuForm.items.length;
         axios.defaults.headers.token = 'testToken';
-        axios.post('http://127.0.0.1:8000/v1/menu', this.menuForm
+        this.$axios.post('/v1/menu', this.menuForm
         ).then(response => {
           console.log('response');
           console.log(response.data);

@@ -21,9 +21,9 @@ export function removeJWT() {
   eraseCookie('jwtToken');
 }
 
-export function tokenRefresh(refreshToken) {
+export function tokenRefresh(refreshToken, apiUrl) {
   return new Promise((resolve, reject) => {
-    axios.post('http://127.0.0.1:8000/v1/tokenRefresh', {
+    axios.post(apiUrl + '/v1/tokenRefresh', {
         refreshToken: refreshToken,
       }
     ).then(response => {

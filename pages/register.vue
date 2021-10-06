@@ -42,7 +42,7 @@
     },
     methods: {
       register() {
-        axios.post('http://127.0.0.1:8000/v1/register', this.form).then(response => {
+        axios.post(this.$config.apiUrl + '/v1/register', this.form).then(response => {
           if (response.data === 'success') {
             toastr.success('register success');
           } else {

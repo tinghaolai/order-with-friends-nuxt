@@ -40,7 +40,7 @@
     },
     methods: {
       login() {
-        axios.post('http://127.0.0.1:8000/v1/login', this.form).then(response => {
+        axios.post(this.$config.apiUrl + '/v1/login', this.form).then(response => {
           if (response.data.status === 0) {
             this.$router.push('/');
             this.$store.dispatch('recordLoginInfo', response.data.data);

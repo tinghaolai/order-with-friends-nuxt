@@ -20,7 +20,7 @@ export default ({ app, $axios, store, redirect, $config: { apiUrl } }, inject) =
         return;
       }
 
-      tokenRefresh(refreshToken).then(response => {
+      tokenRefresh(refreshToken, apiUrl).then(response => {
         store.dispatch('recordLoginInfo', response);
         config.headers.token = store.getters.userToken;
       }).catch(error => {
