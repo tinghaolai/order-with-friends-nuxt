@@ -57,7 +57,7 @@
       }
     },
     beforeCreate() {
-      if (this.$ifUserLogin) {
+      if (this.$ifUserLogin()) {
         this.$router.push('/');
       }
     },
