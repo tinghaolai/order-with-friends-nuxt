@@ -1,6 +1,6 @@
 import { ifJWTExpired, tokenRefresh } from '~/services/jwt'
 
-export default ({ app, $axios, store, redirect }, inject) => {
+export default ({ app, $axios, store, redirect, $config: { apiUrl } }, inject) => {
   inject('loginAxios', () => {
     return axios.create({
       headers: {
@@ -9,6 +9,7 @@ export default ({ app, $axios, store, redirect }, inject) => {
     })
   });
 
+  $axios.defaults.baseURL = apiUrl;
   $axios.onRequest(config => {
     const token = store.getters.userToken;
     const refreshToken = store.getters.refreshToken;

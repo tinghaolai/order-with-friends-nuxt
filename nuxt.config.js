@@ -52,5 +52,9 @@ export default {
         'toastr': 'toastr'
       })
     ]
+  },
+
+  publicRuntimeConfig: {
+    apiUrl: process.env.API_URL,
   }
 }
