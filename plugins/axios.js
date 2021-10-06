@@ -1,4 +1,4 @@
-import { ifJWTExpired } from '~/services/jwt'
+import { ifJWTExpired, tokenRefresh } from '~/services/jwt'
 
 export default ({ app, $axios, store, redirect }, inject) => {
   inject('loginAxios', () => {
@@ -7,22 +7,27 @@ export default ({ app, $axios, store, redirect }, inject) => {
         token: store.getters.userToken,
       }
     })
-  })
+  });
 
   $axios.onRequest(config => {
     const token = store.getters.userToken;
-    if (!token) {
-      redirect('/login');
+    const refreshToken = store.getters.refreshToken;
+    if ((!token) || (ifJWTExpired(token))) {
+      if (!refreshToken) {
+        redirect('/login');
 
-      return;
+        return;
+      }
+
+      tokenRefresh(refreshToken).then(response => {
+        store.dispatch('recordLoginInfo', response);
+        config.headers.token = store.getters.userToken;
+      }).catch(error => {
+        store.dispatch('logout');
+        redirect('/login');
+      });
+    } else {
+      config.headers.token = token;
     }
-
-    if (ifJWTExpired(token)) {
-      redirect('/login');
-
-      return;
-    }
-
-    config.headers.token = token;
   })
 }

@@ -1,4 +1,5 @@
 import { eraseCookie } from '~/services/cookie'
+import axios from "axios";
 
 export function parseJwt (token) {
   var base64Url = token.split('.')[1];
@@ -18,4 +19,21 @@ export function ifJWTExpired(token) {
 
 export function removeJWT() {
   eraseCookie('jwtToken');
+}
+
+export function tokenRefresh(refreshToken) {
+  return new Promise((resolve, reject) => {
+    axios.post('http://127.0.0.1:8000/v1/tokenRefresh', {
+        refreshToken: refreshToken,
+      }
+    ).then(response => {
+      if (response.data.status === 0) {
+        resolve(response.data.data);
+      } else {
+        reject();
+      }
+    }).catch(error => {
+        reject();
+    });
+  });
 }
